@@ -23,6 +23,7 @@ inside = 0
 defense = 0
 playmaking = 0
 athletic = 0
+total = 0
 
 years = ["2000-01", "2001-02", "2002-03", "2003-04", "2004-05", "2005-06", "2006-07", "2007-08", "2008-09", "2009-10", "2010-11", "2011-12", "2012-13", "2013-14", "2014-15", "2015-16", "2016-17"]
 def get_id(first_name, last_name):
@@ -126,6 +127,7 @@ def get_player_stats():
     two_shots_made = assisted_stats["FGM"]
     three_shots_made = assisted_stats["FG3M"]
     solo_points = get_unassisted_impact(two_shots_made, three_shots_made)
+    print "Solo Percent is {}".format(solo_points)
     points_created = get_passing_stats()
     get_playmaking_impact(points_created, solo_points)
     #return get_vertical_leap(1)
@@ -134,7 +136,10 @@ def get_player_stats():
     ## DEFENSE ##
     get_defense_impact()
     #return two_pt_stats + three_pt_and_free_stats
-    
+    global total
+    total = long_range + inside + defense + athletic + playmaking
+
+
 def get_3pt_impact_and_free_throw():
     global free_throw, three_point, blocks, steals, long_range
     my_player = player.PlayerGeneralSplits(player_id)
@@ -192,27 +197,29 @@ def get_defense_impact():
 def get_playmaking_impact(assist, solo):
     global playmaking
     if assist >= 24:
-        assist_score = 5
+        assist_score = 6
     elif assist >= 20:
-        assist_score = 4
+        assist_score = 5
     elif assist >= 15:
-        assist_score = 3
+        assist_score = 4
     elif assist >= 10:
+        assist_score = 3
+    elif assist >= 7:
         assist_score = 2
     elif assist >= 5:
         assist_score = 1
     else:
         assist_score = 0
 
+
+   
     if solo >= .5:
-        solo_score = 5
-    elif solo >= .4:
         solo_score = 4
-    elif solo >= .3:
+    elif solo >= .4:
         solo_score = 3
-    elif solo >= .2:
+    elif solo >= .3:
         solo_score = 2
-    elif solo >= 1:
+    elif solo >= .2:
         solo_score = 1
     else:
         solo_score = 0
@@ -230,7 +237,7 @@ def get_athletic_impact(height, dunks):
         height_score = 3
     else:
         height_score = 4
-
+    print "{} Dunks".format(dunks)
     if dunks >= 140:
         dunks_score = 10
     elif dunks >= 70:
@@ -252,6 +259,7 @@ def get_points_created_impact(twos, threes):
         points += two*2
     for three in threes:
         points += three*3
+    print "points created: {}".format(points)
     return points
 
 
@@ -279,6 +287,7 @@ def get_3pt_score(three_point):
     if pd.isnull(three_point):
         return 0
 
+    print three_point
 
     if three_point >= 1.3:
         return 5
@@ -373,7 +382,7 @@ if __name__ == '__main__':
     name = first_name + " " + last_name
     get_id(first_name, last_name)
     stats = get_player_stats()
-    print "BallerVersus for {} {}:\nLong Range Shooting: {}\nInside Shooting: {}\nDefense: {}\nPlaymaking: {}\nAthleticism : {}\nYOU DID IT TOBI!".format(first_name, last_name, long_range, inside, defense, playmaking, athletic)
+    print "BallerVersus for {} {}:\nLong Range Shooting: {}\nInside Shooting: {}\nDefense: {}\nPlaymaking: {}\nAthleticism : {}\nTotal of {}/50".format(first_name, last_name, long_range, inside, defense, playmaking, athletic, total)
 
 
 
