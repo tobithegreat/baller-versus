@@ -2,9 +2,7 @@ import pandas as pd
 from nba_py import player
 import sys
 import re
-from urlparse import urljoin
 from bs4 import BeautifulSoup
-import json
 import requests
 
 name = ""
@@ -130,7 +128,6 @@ def get_player_stats():
     get_athletic_impact(height, dunks)
     
     ## SHOTS ASSISTED BY AND TO ##
-    global solo_points
     assisted_stats = my_player.assisted_shots()
     two_shots_made = assisted_stats["FGM"]
     three_shots_made = assisted_stats["FG3M"]
@@ -202,7 +199,7 @@ def get_defense_impact():
     #points allowed per game           
 
 def get_playmaking_impact(assist, solo):
-    global playmaking
+    global playmaking, assist_score, solo_score
     if assist >= 24:
         assist_score = 6
     elif assist >= 20:
@@ -386,7 +383,8 @@ if __name__ == '__main__':
     name = first_name + " " + last_name
     get_id(first_name, last_name)
     stats = get_player_stats()
-    print "\nBallerVersus for {} {}:\n\nLong Range Shooting: {}\nThree Point Impact: {} out of 5\nMid_Range Impact: {} out of 2.\nFree Throw Score: {} out of 3.\n\nInside Shooting: {}\n\nDefense: {}\nDRPM Score: {} out of 8.\nSteals and Blocks Score: {} out of 2.\n\nPlaymaking: {}\nUnassisted Scoring Impact: {} out of 4.\nPoints Created by Assists Score: {} out of 6\n\nAthleticism: {}\nHeight Score: {} out of 4.\nDunk Score: {} out of 10.Total of {}/50\n".format(first_name, last_name, long_range, three_point, mid_range, free_throw, inside, defense, d_rpm_score, steals_and_blocks_score, playmaking, solo_score, assist_score, athletic, height_score, dunks_score, total)
+    divider = "------------"
+    print "\nBallerVersus for {} {}:\n\nLong Range Shooting: {} out of 10.\n{}\nThree Point Impact: {} out of 5\nMid_Range Impact: {} out of 2.\nFree Throw Score: {} out of 3.\n\nInside Shooting: {} out of 10.\n{}\n\nDefense: {} out of 10.\n{}\nDRPM Score: {} out of 8.\nSteals and Blocks Score: {} out of 2.\n\nPlaymaking: {} out of 10.\n{}\nUnassisted Scoring Impact: {} out of 4.\nPoints Created by Assists Score: {} out of 6\n\nAthleticism: {} out of 10.\n{}\nHeight Score: {} out of 4.\nDunk Score: {} out of 10.\n\nTotal of {} out of 50\n".format(first_name, last_name, long_range, divider, three_point, mid_range, free_throw, inside, divider, defense, divider, d_rpm_score, steals_and_blocks_score, playmaking, divider, solo_score, assist_score, athletic, divider, height_score, dunks_score, total)
 
 
 
