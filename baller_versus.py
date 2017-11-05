@@ -18,6 +18,13 @@ steals = 0
 blocks = 0
 assists = 0
 
+d_rpm_score = 0
+steals_and_blocks_score = 0
+assist_score = 0
+solo_score = 0
+dunks_score = 0
+height_score = 0
+
 long_range = 0
 inside = 0
 defense = 0
@@ -123,11 +130,11 @@ def get_player_stats():
     get_athletic_impact(height, dunks)
     
     ## SHOTS ASSISTED BY AND TO ##
+    global solo_points
     assisted_stats = my_player.assisted_shots()
     two_shots_made = assisted_stats["FGM"]
     three_shots_made = assisted_stats["FG3M"]
     solo_points = get_unassisted_impact(two_shots_made, three_shots_made)
-    print "Solo Percent is {}".format(solo_points)
     points_created = get_passing_stats()
     get_playmaking_impact(points_created, solo_points)
     #return get_vertical_leap(1)
@@ -174,7 +181,7 @@ def get_2pt_impact(fgs, pcts):
     
 
 def get_defense_impact():
-    global defense
+    global defense, d_rpm_score, steals_and_blocks_score
     d_rpm = float(get_defense_rpm(1))
     d_rpm_score = get_drpm_score(d_rpm)
     steals_and_blocks_score = get_steals_blocks_score(steals + blocks)
@@ -227,7 +234,7 @@ def get_playmaking_impact(assist, solo):
     playmaking = assist_score + solo_score
 
 def get_athletic_impact(height, dunks):
-    global athletic
+    global athletic, dunks_score, height_score
     score = 0
     if height >= 83:
         height_score = 1
@@ -237,7 +244,7 @@ def get_athletic_impact(height, dunks):
         height_score = 3
     else:
         height_score = 4
-    print "{} Dunks".format(dunks)
+
     if dunks >= 140:
         dunks_score = 10
     elif dunks >= 70:
@@ -259,7 +266,6 @@ def get_points_created_impact(twos, threes):
         points += two*2
     for three in threes:
         points += three*3
-    print "points created: {}".format(points)
     return points
 
 
@@ -286,8 +292,6 @@ def get_free_throw_score(ft_pct):
 def get_3pt_score(three_point):
     if pd.isnull(three_point):
         return 0
-
-    print three_point
 
     if three_point >= 1.3:
         return 5
@@ -382,7 +386,7 @@ if __name__ == '__main__':
     name = first_name + " " + last_name
     get_id(first_name, last_name)
     stats = get_player_stats()
-    print "BallerVersus for {} {}:\nLong Range Shooting: {}\nInside Shooting: {}\nDefense: {}\nPlaymaking: {}\nAthleticism : {}\nTotal of {}/50".format(first_name, last_name, long_range, inside, defense, playmaking, athletic, total)
+    print "\nBallerVersus for {} {}:\n\nLong Range Shooting: {}\nThree Point Impact: {} out of 5\nMid_Range Impact: {} out of 2.\nFree Throw Score: {} out of 3.\n\nInside Shooting: {}\n\nDefense: {}\nDRPM Score: {} out of 8.\nSteals and Blocks Score: {} out of 2.\n\nPlaymaking: {}\nUnassisted Scoring Impact: {} out of 4.\nPoints Created by Assists Score: {} out of 6\n\nAthleticism: {}\nHeight Score: {} out of 4.\nDunk Score: {} out of 10.Total of {}/50\n".format(first_name, last_name, long_range, three_point, mid_range, free_throw, inside, defense, d_rpm_score, steals_and_blocks_score, playmaking, solo_score, assist_score, athletic, height_score, dunks_score, total)
 
 
 
