@@ -232,6 +232,7 @@ def get_playmaking_impact(assist, solo):
 
 def get_athletic_impact(height, dunks):
     global athletic, dunks_score, height_score
+    print "{} Dunks".format(dunks)
     score = 0
     if height >= 83:
         height_score = 1
@@ -384,7 +385,7 @@ if __name__ == '__main__':
     get_id(first_name, last_name)
     stats = get_player_stats()
     divider = "------------"
-    print "\nBallerVersus for {} {}:\n\nLong Range Shooting: {} out of 10.\n{}\nThree Point Impact: {} out of 5\nMid_Range Impact: {} out of 2.\nFree Throw Score: {} out of 3.\n\nInside Shooting: {} out of 10.\n{}\n\nDefense: {} out of 10.\n{}\nDRPM Score: {} out of 8.\nSteals and Blocks Score: {} out of 2.\n\nPlaymaking: {} out of 10.\n{}\nUnassisted Scoring Impact: {} out of 4.\nPoints Created by Assists Score: {} out of 6\n\nAthleticism: {} out of 10.\n{}\nHeight Score: {} out of 4.\nDunk Score: {} out of 10.\n\nTotal of {} out of 50\n".format(first_name, last_name, long_range, divider, three_point, mid_range, free_throw, inside, divider, defense, divider, d_rpm_score, steals_and_blocks_score, playmaking, divider, solo_score, assist_score, athletic, divider, height_score, dunks_score, total)
+    print "\nBallerVersus for {} {}:\n\nLong Range Shooting: {} out of 10.\n{}\nThree Point Impact: {} out of 5.\nMid Range Impact: {} out of 2.\nFree Throw Score: {} out of 3.\n\nInside Shooting: {} out of 10.\n{}\n\nDefense: {} out of 10.\n{}\nDRPM Score: {} out of 8.\nSteals and Blocks Score: {} out of 2.\n\nPlaymaking: {} out of 10.\n{}\nUnassisted Scoring Impact: {} out of 4.\nPoints Created by Assists Score: {} out of 6.\n\nAthleticism: {} out of 10.\n{}\nHeight Score: {} out of 4.\nDunk Score: {} out of 10.\n\nFinal Total: {} out of 50.\n".format(first_name, last_name, long_range, divider, three_point, mid_range, free_throw, inside, divider, defense, divider, d_rpm_score, steals_and_blocks_score, playmaking, divider, solo_score, assist_score, athletic, divider, height_score, dunks_score, total)
 
 
 
